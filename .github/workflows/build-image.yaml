@@ -1,0 +1,21 @@
+name: Build Image
+
+on:
+  push:
+    branches:
+      - prod
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+      - name: build/docker-image 
+        run: |
+          docker build -t sunjinkang/instagram-lite:latest -f ./backend/Dockerfile ./backend
+      - name: docker/login
+        run: |
+          docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PW}}
+      - name: docker/push
+        run: |
+          docker push sunjinkang/instagram-lite:latest
+
