@@ -103,3 +103,6 @@ dist
 # TernJS port file
 .tern-port
 backend/package-lock.json
+
+# Terraform sa
+terraform-sa.json
