@@ -15,7 +15,7 @@ variable "project" {
 }
 
 variable "region" {
-  description = "The region for subnetworks in the network"
+  description = "The region for sub-networks in the network"
   type        = string
 }
 
