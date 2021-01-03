@@ -106,3 +106,12 @@ backend/package-lock.json
 
 # Terraform sa
 terraform-sa.json
+
+# pub keys
+pubkeys.txt
+
+# Ansible
+ansible/hosts
+
+# env vars
+backend/.env

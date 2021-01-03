@@ -3,11 +3,21 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var db = require('./db')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+db.query('SELECT 1', (err, res) => {
+  if (err) {
+    console.log(err.stack)
+  } else {
+    console.log(res.rows[0])
+    process.exit(1);
+  }
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
