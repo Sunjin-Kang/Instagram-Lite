@@ -1,0 +1,25 @@
+[Unit]
+Description=Postgres DB
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+Restart=always
+Environment=CONTAINER_NAME=postgres
+Environment=IMAGE_NAME=postgres:13.1
+ExecStartPre=/usr/bin/docker pull $IMAGE_NAME
+ExecStart=/usr/bin/docker run \
+    -p 5432:5432 \
+    -v /postgres:/var/lib/postgresql/data:rw \
+    -e POSTGRES_DB=instalite \
+    -e POSTGRES_USER=insta \
+    -e POSTGRES_PASSWORD=lite \
+    --rm \
+    --name $CONTAINER_NAME \
+    $IMAGE_NAME \
+    postgres
+ExecStop=/usr/bin/docker kill $CONTAINER_NAME
+
+[Install]
+WantedBy=multi-user.target

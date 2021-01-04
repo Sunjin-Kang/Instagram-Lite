@@ -1,0 +1,20 @@
+[Unit]
+Description=Redis
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+Restart=always
+Environment=CONTAINER_NAME=redis
+Environment=IMAGE_NAME=redis:6.0.9
+ExecStartPre=/usr/bin/docker pull $IMAGE_NAME
+ExecStart=/usr/bin/docker run \
+    -p 6379:6379 \
+    --rm \
+    --name $CONTAINER_NAME \
+    $IMAGE_NAME
+ExecStop=/usr/bin/docker kill $CONTAINER_NAME
+
+[Install]
+WantedBy=multi-user.target
