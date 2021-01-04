@@ -1,6 +1,6 @@
 const { base64encode, base64decode } = require('nodejs-base64');
 const utils = require('../utils')
-
+const db = require('../db')
 const authenticate = (req, res, next) => {
 
 }
@@ -30,11 +30,19 @@ function decodeBasicHeader(req, res, next) {
 
 function authCheck(req, res, next) {
     decodeBasicHeader(req, res, function (userObject) {
-        if (userObject.username !== 'Peter' && userObject.password !== '12345') {
-            return res.status(400).json({ message: 'invalid basic auth' })
-        }
-        next(userObject)
+        checkUsers(res, userObject.username, userObject.password, (queryResult) => next(queryResult))
     });
+}
+
+function checkUsers(res, user, pw, next) {
+    db.query('SELECT * FROM users WHERE email = $1 and password = $2', [user, pw], (err, result) => {
+        if (err) {
+          return res.status(400).json({ message: 'invalid basic auth' })
+        } else {
+          console.log(result.rows[0])
+          next(result.rows[0])
+        }
+    })
 }
 
 module.exports = {

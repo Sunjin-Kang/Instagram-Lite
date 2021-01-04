@@ -107,6 +107,9 @@ backend/package-lock.json
 # Terraform sa
 terraform-sa.json
 
+# bucket sa
+bucket-sa.json
+
 # pub keys
 pubkeys.txt
 

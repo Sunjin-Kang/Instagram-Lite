@@ -1,0 +1,23 @@
+[Unit]
+Description=Instalite Server
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+Restart=always
+Environment=CONTAINER_NAME=instagram-lite
+Environment=IMAGE_NAME=sunjinkang/instagram-lite:latest
+ExecStartPre=/usr/bin/docker pull $IMAGE_NAME
+ExecStart=/usr/bin/docker run \
+    -p 3000:3000 \
+    --env-file /etc/insta/env.list \
+    -v /etc/insta/key:/etc/insta:r \
+    -e ENVIRONMENT=production \
+    --rm \
+    --name $CONTAINER_NAME \
+    $IMAGE_NAME
+ExecStop=/usr/bin/docker kill $CONTAINER_NAME
+
+[Install]
+WantedBy=multi-user.target
