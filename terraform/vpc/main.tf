@@ -9,7 +9,7 @@ terraform {
 # provided subnetworks each opt-in; in general, Private Google Access should be the default.
 # ---------------------------------------------------------------------------------------------------------------------
 
-
+/*
 resource "google_compute_network" "vpc" {
   name    = "${var.name_prefix}-network"
   project = var.project
@@ -141,4 +141,4 @@ module "network_firewall" {
   public_subnetwork  = google_compute_subnetwork.vpc_subnetwork_public.self_link
   private_subnetwork = google_compute_subnetwork.vpc_subnetwork_private.self_link
 }
-  
+*/
